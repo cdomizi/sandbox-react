@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 
-// project imports
+// project import
 import Navbar from './Navbar';
 
 const drawerWidth = 240;

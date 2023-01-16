@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-// project imports
+// project import
 import OldNavbar from '../OldNavbar/Navbar';
 
 // duplicate code!!

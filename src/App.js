@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 
-//projects imports
+//projects import
 import Header from './Header/Header';
 import ResponsiveDrawer from './Navbar/ResponsiveDrawer';
 import MainLayout from './MainLayout/MainLayout';
