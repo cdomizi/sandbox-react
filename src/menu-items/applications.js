@@ -1,42 +1,28 @@
-// assets
-import ViewKanbanIcon from '@mui/icons-material/ViewKanban';
-import ChatIcon from '@mui/icons-material/Chat';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import HeadphonesIcon from '@mui/icons-material/Headphones';
-
-// icons
-const icons = {
-  ViewKanbanIcon,
-  ChatIcon,
-  CalendarMonthIcon,
-  HeadphonesIcon
-};
-
 const applications = {
   id: 'applications',
   children: [
     {
       id: '0',
       title: 'Kanban',
-      icon: icons.ViewKanbanIcon,
+      icon: 'ViewKanban',
       url: 'dummy/url',
     },
     {
       id: '1',
       title: 'Chat',
-      icon: icons.ChatIcon,
+      icon: 'Chat',
       url: 'dummy/url',
     },
     {
       id: '2',
       title: 'Calendar',
-      icon: icons.CalendarMonthIcon,
+      icon: 'CalendarMonth',
       url: 'dummy/url',
     },
     {
       id: '3',
       title: 'Customer',
-      icon: icons.HeadphonesIcon,
+      icon: 'Headphones',
       url: 'dummy/url',
     }
   ]
