@@ -1,10 +1,6 @@
-import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-
-// project import
-import OldNavbar from '../OldNavbar/Navbar';
 
 // duplicate code!!
 const drawerWidth = 240;
@@ -30,7 +26,6 @@ function MainLayout() {
         consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
         sapien faucibus et molestie ac.
       </Typography>
-      <OldNavbar />
     </Box>
   );
 }
