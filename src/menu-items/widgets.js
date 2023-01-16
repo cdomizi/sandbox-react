@@ -11,7 +11,7 @@ const icons = {
 };
 
 const widgets = {
-  id: 'group-widgets',
+  id: 'widgets',
   children: [
     {
       id: '0',

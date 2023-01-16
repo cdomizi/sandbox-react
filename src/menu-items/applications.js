@@ -13,7 +13,7 @@ const icons = {
 };
 
 const applications = {
-  id: 'group-applications',
+  id: 'applications',
   children: [
     {
       id: '0',

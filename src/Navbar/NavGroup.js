@@ -1,16 +1,20 @@
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 
 // project import
 import NavList from './NavList';
+import NavTitle from './NavTitle';
 
 function NavGroup(props) {
-  const items1 = ['Inbox', 'Starred', 'Send email', 'Drafts'];
-  const items2 = ['All mail', 'Trash', 'Spam'];
 
   return (
     <Box>
-      <NavList items={items1}/>
-      <NavList items={items2}/>
+      <Divider/>
+      <NavTitle name={props.id}></NavTitle>
+      <NavList
+        key={props.id}
+        items={props.children}
+      />
     </Box>
   );
 }

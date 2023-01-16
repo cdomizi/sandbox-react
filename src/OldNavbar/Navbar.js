@@ -14,7 +14,6 @@ function Navbar() {
   });
   return (
     <div>
-      {navGroups}
       <Log value={menuItems}/>
     </div>
   );
