@@ -1,22 +1,30 @@
+// assets
+import BarChartIcon from '@mui/icons-material/BarChart';
+import QueryStatsIcon from '@mui/icons-material/CalendarMonth';
+import StorageIcon from '@mui/icons-material/Storage';
+
+// icons
+const icons = { BarChartIcon, QueryStatsIcon, StorageIcon };
+
 const widgets = {
   id: 'widgets',
   children: [
     {
       id: '0',
       title: 'Chart',
-      icon: 'BarChart',
+      icon: icons.BarChartIcon,
       url: 'dummy/url',
     },
     {
       id: '1',
       title: 'Statistics',
-      icon: 'QueryStats',
+      icon: icons.QueryStatsIcon,
       url: 'dummy/url',
     },
     {
       id: '2',
       title: 'Data',
-      icon: 'Storage',
+      icon: icons.StorageIcon,
       url: 'dummy/url',
     }
   ]
