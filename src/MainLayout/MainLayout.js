@@ -2,6 +2,9 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
+import Counter from '../Counter/Counter';
+import Switch from '../Switch/Switch';
+
 // duplicate code!!
 const drawerWidth = 240;
 
@@ -26,6 +29,10 @@ function MainLayout() {
         consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
         sapien faucibus et molestie ac.
       </Typography>
+      <hr />
+      <Switch />
+      <hr />
+      <Counter />
     </Box>
   );
 }
