@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 
 import Counter from '../Counter/Counter';
 import Switch from '../Switch/Switch';
+import Picture from '../Picture/Picture';
 
 // duplicate code!!
 const drawerWidth = 240;
@@ -33,6 +34,8 @@ function MainLayout() {
       <Switch />
       <hr />
       <Counter />
+      <hr />
+      <Picture />
     </Box>
   );
 }
