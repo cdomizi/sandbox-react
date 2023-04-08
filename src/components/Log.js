@@ -1,5 +1,5 @@
-const Log = ({ value = "No data", rep = null, space = 2 }) => {
-  const data = JSON.stringify(value, rep, space);
+const Log = ({ value = "No data", replace = null, space = 2 }) => {
+  const data = JSON.stringify(value, replace, space);
   return (
     <>
       <pre>
