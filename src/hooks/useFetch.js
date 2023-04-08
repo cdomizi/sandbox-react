@@ -1,32 +1,39 @@
 import { useEffect, useReducer } from "react";
 
-const useFetch = (url, options) => {
-  const initialState = { loading: false, error: undefined, data: undefined };
+const initialState = { loading: false, error: undefined, data: undefined };
 
-  // Reducer function
-  const fetchReducer = (state, action) => {
-    switch (action.type) {
-      case "loading": {
-        return { ...initialState, loading: true };
-      }
-      case "success": {
-        return {
-          ...initialState,
-          data: action.payload,
-        };
-      }
-      case "error": {
-        return {
-          ...initialState,
-          error: action.payload,
-        };
-      }
-      default: {
-        return state;
-      }
+// Reducer actions
+const ACTIONS = {
+  LOADING: "loading",
+  SUCCESS: "success",
+  ERROR: "error",
+};
+
+// Reducer function
+const fetchReducer = (state, action) => {
+  switch (action.type) {
+    case ACTIONS.LOADING: {
+      return { ...initialState, loading: true };
     }
-  };
+    case ACTIONS.SUCCESS: {
+      return {
+        ...initialState,
+        data: action.payload,
+      };
+    }
+    case ACTIONS.ERROR: {
+      return {
+        ...initialState,
+        error: action.payload,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
+};
 
+const useFetch = (url, options) => {
   const [state, dispatch] = useReducer(fetchReducer, initialState);
 
   useEffect(() => {
@@ -37,7 +44,7 @@ const useFetch = (url, options) => {
 
     // Fetch data
     const fetchData = async () => {
-      dispatch({ type: "loading" });
+      dispatch({ type: ACTIONS.LOADING });
 
       try {
         const response = await fetch(url, {
@@ -52,7 +59,7 @@ const useFetch = (url, options) => {
 
         const data = await response.json();
         dispatch({
-          type: "success",
+          type: ACTIONS.SUCCESS,
           payload: data,
         });
       } catch (error) {
@@ -60,7 +67,7 @@ const useFetch = (url, options) => {
           console.error(`Error while fetching data: ${error.message}`);
         }
         dispatch({
-          type: "error",
+          type: ACTIONS.ERROR,
           payload: error,
         });
       }
