@@ -4,9 +4,10 @@ import { useContext } from "react";
 import { drawerContext } from "../Context/Contexts";
 import Counter from "../Counter/Counter";
 import Switch from "../Switch/Switch";
+import TestForm from "../TestForm";
 
 // mui components
-import { Box, Card, CardContent, Stack, Toolbar } from "@mui/material";
+import { Box, Card, CardContent, Divider, Stack, Toolbar } from "@mui/material";
 
 const ContentCard = ({ children, minWidth }) => {
   return (
@@ -42,6 +43,8 @@ function MainLayout() {
           <Counter />
         </ContentCard>
       </Stack>
+      <Divider sx={{ my: 6 }} />
+      <TestForm />
     </Box>
   );
 }
