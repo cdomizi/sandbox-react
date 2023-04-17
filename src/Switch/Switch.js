@@ -1,16 +1,20 @@
 import { useState } from "react";
 
+import { Button, Typography } from "@mui/material";
+
 function Switch() {
-  const [ mySwitch, setMySwitch ] = useState(true)
+  const [mySwitch, setMySwitch] = useState(true);
   function toggle() {
-    setMySwitch(prevMySwitch => !prevMySwitch)
+    setMySwitch((prevMySwitch) => !prevMySwitch);
   }
 
   return (
     <>
-      <h1>Switch</h1>
-      <button onClick={toggle}>Toggle</button>
-      <p>{mySwitch ? "ON" : "OFF"}</p>
+      <Typography variant="h3">Switch</Typography>
+      <Button variant="outlined" onClick={toggle} sx={{ my: 3 }}>
+        Toggle
+      </Button>
+      <Typography>{mySwitch ? "ON" : "OFF"}</Typography>
     </>
   );
 }
