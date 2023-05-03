@@ -35,6 +35,7 @@ const ControlledForm = () => {
           label="Title"
           value={formData.title}
           onChange={handleChange}
+          required
         />
         <TextField
           id="brand"

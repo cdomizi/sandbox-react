@@ -24,7 +24,7 @@ const UncontrolledForm = () => {
       sx={{ maxWidth: 400 }}
     >
       <Typography variant="h3">Uncontrolled Form</Typography>
-      <TextField id="title" name="title" label="Title" />
+      <TextField id="title" name="title" label="Title" required />
       <TextField id="brand" name="brand" label="Brand" />
       <TextField id="price" name="price" label="Price" />
       <Button type="submit" variant="contained">
