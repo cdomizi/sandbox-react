@@ -6,7 +6,8 @@ import Counter from "../../components/Counter/Counter";
 import Switch from "../../components/Switch/Switch";
 import ControlledForm from "../../components/Forms/ControlledForm";
 import UncontrolledForm from "../../components/Forms/UncontrolledForm";
-import HookForm from "../../components/Forms/HookForm";
+import ControlledHook from "../../components/Forms/ControlledHook";
+import UncontrolledHook from "../../components/Forms/UncontrolledHook";
 import ContentCard from "../ContentCard";
 
 // mui components
@@ -41,7 +42,10 @@ function MainLayout() {
           <UncontrolledForm />
         </ContentCard>
         <ContentCard>
-          <HookForm />
+          <ControlledHook />
+        </ContentCard>
+        <ContentCard>
+          <UncontrolledHook />
         </ContentCard>
       </Stack>
     </Box>

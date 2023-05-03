@@ -1,9 +1,9 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
 
-const HookForm = () => {
+const UncontrolledHook = () => {
   return (
     <Stack component="form" spacing={3}>
-      <Typography variant="h3">Hook Form</Typography>
+      <Typography variant="h3">Uncontrolled Hook</Typography>
       <TextField id="title" name="title" label="Title" required />
       <TextField id="brand" name="brand" label="Brand" />
       <TextField id="price" name="price" label="Price" />
@@ -14,4 +14,4 @@ const HookForm = () => {
   );
 };
 
-export default HookForm;
+export default UncontrolledHook;
