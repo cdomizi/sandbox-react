@@ -4,24 +4,12 @@ import { useContext } from "react";
 import { drawerContext } from "../Context/Contexts";
 import Counter from "../Counter/Counter";
 import Switch from "../Switch/Switch";
-import TestForm from "../TestForm";
+import ControlledForm from "../Forms/ControlledForm";
+import UncontrolledForm from "../Forms/UncontrolledForm";
+import ContentCard from "../components/ContentCard";
 
 // mui components
-import { Box, Card, CardContent, Divider, Stack, Toolbar } from "@mui/material";
-
-const ContentCard = ({ children, minWidth }) => {
-  return (
-    <Card
-      sx={{
-        minWidth: minWidth ?? "auto",
-        border: "1px solid",
-        borderColor: "divider",
-      }}
-    >
-      <CardContent>{children}</CardContent>
-    </Card>
-  );
-};
+import { Box, Divider, Stack, Toolbar } from "@mui/material";
 
 function MainLayout() {
   const drawer = useContext(drawerContext);
@@ -44,7 +32,14 @@ function MainLayout() {
         </ContentCard>
       </Stack>
       <Divider sx={{ my: 6 }} />
-      <TestForm />
+      <Stack direction="row" spacing={5}>
+        <ContentCard>
+          <ControlledForm />
+        </ContentCard>
+        <ContentCard>
+          <UncontrolledForm />
+        </ContentCard>
+      </Stack>
     </Box>
   );
 }
