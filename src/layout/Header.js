@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { drawerContext } from "../Context/Contexts";
+import { drawerContext } from "../context/Contexts";
 
 // mui import
 import { Toolbar, AppBar, Typography, IconButton } from "@mui/material";

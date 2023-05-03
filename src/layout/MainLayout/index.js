@@ -1,12 +1,12 @@
 import { useContext } from "react";
 
 // project import
-import { drawerContext } from "../Context/Contexts";
-import Counter from "../Counter/Counter";
-import Switch from "../Switch/Switch";
-import ControlledForm from "../Forms/ControlledForm";
-import UncontrolledForm from "../Forms/UncontrolledForm";
-import ContentCard from "../components/ContentCard";
+import { drawerContext } from "../../context/Contexts";
+import Counter from "../../components/Counter/Counter";
+import Switch from "../../components/Switch/Switch";
+import ControlledForm from "../../components/Forms/ControlledForm";
+import UncontrolledForm from "../../components/Forms/UncontrolledForm";
+import ContentCard from "../ContentCard";
 
 // mui components
 import { Box, Divider, Stack, Toolbar } from "@mui/material";
