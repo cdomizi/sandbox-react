@@ -48,6 +48,7 @@ const ControlledForm = () => {
           id="price"
           name="price"
           label="Price"
+          type="number"
           value={formData.price}
           onChange={handleChange}
         />

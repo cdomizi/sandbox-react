@@ -26,7 +26,7 @@ const UncontrolledForm = () => {
       <Typography variant="h3">Uncontrolled Form</Typography>
       <TextField id="title" name="title" label="Title" required />
       <TextField id="brand" name="brand" label="Brand" />
-      <TextField id="price" name="price" label="Price" />
+      <TextField id="price" name="price" label="Price" type="number" />
       <Button type="submit" variant="contained">
         Submit
       </Button>
