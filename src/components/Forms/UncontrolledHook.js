@@ -44,14 +44,25 @@ const UncontrolledHook = () => {
           {...register("name", {
             minLength: {
               value: 3,
-              message: <>User should 3 characters long.</>,
+              message: <>User should be 3 characters long.</>,
             },
           })}
           label="Name"
           error={!!errors.name}
           helperText={errors.name ? errors.name.message : " "}
         />
-        <TextField {...register("age")} label="Age" type="number" />
+        <TextField
+          {...register("age", {
+            min: {
+              value: 0,
+              message: <>Provide a valid age.</>,
+            },
+          })}
+          label="Age"
+          type="number"
+          error={!!errors.age}
+          helperText={errors.age ? errors.age.message : " "}
+        />
         <Button type="submit" variant="contained">
           Submit
         </Button>

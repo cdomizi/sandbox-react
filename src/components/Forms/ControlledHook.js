@@ -5,10 +5,11 @@ import { Button, Stack, TextField, Typography } from "@mui/material";
 
 const ControlledHook = () => {
   const {
+    register,
     control,
     handleSubmit,
     watch,
-    formState: { isSubmitSuccessful },
+    formState: { isSubmitSuccessful, errors },
     reset,
   } = useForm({
     defaultValues: {
@@ -46,21 +47,56 @@ const ControlledHook = () => {
         control={control}
         name="user"
         render={({ field }) => (
-          <TextField {...field} id="user" label="User" required />
+          <TextField
+            {...field}
+            {...register("user", {
+              required: "This field is required.",
+            })}
+            id="user"
+            label="User"
+            error={!!errors.user}
+            helperText={errors.user && errors.user.message}
+            InputLabelProps={{ required: true }}
+          />
         )}
       />
       <Controller
         control={control}
         name="name"
         render={({ field }) => (
-          <TextField {...field} id="name" label="Name" required />
+          <TextField
+            {...field}
+            {...register("name", {
+              minLength: {
+                value: 3,
+                message: <>User should be 3 characters long.</>,
+              },
+            })}
+            id="name"
+            label="Name"
+            error={!!errors.name}
+            helperText={errors.name && errors.name.message}
+          />
         )}
       />
       <Controller
         control={control}
         name="age"
         render={({ field }) => (
-          <TextField {...field} id="age" label="Age" required />
+          <TextField
+            {...field}
+            {...register("age", {
+              min: {
+                value: undefined,
+                message: <>Provide a valid age.</>,
+              },
+            })}
+            id="age"
+            label="Age"
+            type="number"
+            error={!!errors.age}
+            helperText={errors.age && errors.age.message}
+          />
         )}
       />
       <Button type="submit" variant="contained">
