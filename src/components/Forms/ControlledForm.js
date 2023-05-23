@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button, Stack, TextField, Typography } from "@mui/material";
 
 const ControlledForm = () => {
   // form state
-  const initialFormState = {
-    title: "",
-    brand: "",
-    price: "",
-  };
+  const initialFormState = useMemo(
+    () => ({
+      title: "",
+      brand: "",
+      price: "",
+    }),
+    []
+  );
   const [formData, setFormData] = useState(initialFormState);
 
   // update form state on type

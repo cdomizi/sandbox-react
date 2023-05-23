@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { drawerContext } from "../../context/Contexts";
 import Counter from "../../components/Counter/Counter";
 import Switch from "../../components/Switch/Switch";
+import CustomSelect from "../../components/Select/CustomSelect";
 import ControlledForm from "../../components/Forms/ControlledForm";
 import UncontrolledForm from "../../components/Forms/UncontrolledForm";
 import ControlledHook from "../../components/Forms/ControlledHook";
@@ -31,6 +32,9 @@ function MainLayout() {
         </ContentCard>
         <ContentCard minWidth={250}>
           <Counter />
+        </ContentCard>
+        <ContentCard minWidth={250}>
+          <CustomSelect />
         </ContentCard>
       </Stack>
       <Divider sx={{ my: 6 }} />
