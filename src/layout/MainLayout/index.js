@@ -2,14 +2,15 @@ import { useContext } from "react";
 
 // project import
 import { drawerContext } from "../../context/Contexts";
-import Counter from "../../components/Counter/Counter";
-import Switch from "../../components/Switch/Switch";
 import CustomSelect from "../../components/Select/CustomSelect";
 import MultiSelect from "../../components/Select/MultiSelect";
+import SelectHook from "../../components/Select/SelectHook";
 import ControlledForm from "../../components/Forms/ControlledForm";
 import UncontrolledForm from "../../components/Forms/UncontrolledForm";
 import ControlledHook from "../../components/Forms/ControlledHook";
 import UncontrolledHook from "../../components/Forms/UncontrolledHook";
+import Counter from "../../components/Counter/Counter";
+import Switch from "../../components/Switch/Switch";
 import ContentCard from "../ContentCard";
 
 // mui components
@@ -29,16 +30,13 @@ function MainLayout() {
       <Toolbar />
       <Stack direction="row" spacing={5}>
         <ContentCard minWidth={250}>
-          <Switch />
-        </ContentCard>
-        <ContentCard minWidth={250}>
-          <Counter />
-        </ContentCard>
-        <ContentCard minWidth={250}>
           <CustomSelect />
         </ContentCard>
         <ContentCard minWidth={250}>
           <MultiSelect />
+        </ContentCard>
+        <ContentCard minWidth={250}>
+          <SelectHook />
         </ContentCard>
       </Stack>
       <Divider sx={{ my: 6 }} />
@@ -54,6 +52,15 @@ function MainLayout() {
         </ContentCard>
         <ContentCard>
           <UncontrolledHook />
+        </ContentCard>
+      </Stack>
+      <Divider sx={{ my: 6 }} />
+      <Stack direction="row" spacing={5}>
+        <ContentCard minWidth={250}>
+          <Switch />
+        </ContentCard>
+        <ContentCard minWidth={250}>
+          <Counter />
         </ContentCard>
       </Stack>
     </Box>

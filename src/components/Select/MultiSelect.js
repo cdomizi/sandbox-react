@@ -52,9 +52,7 @@ const MultiSelect = () => {
     >
       <Typography variant="h3">Multi-Select</Typography>
       <FormControl>
-        <InputLabel id="myLabel" shrink={true}>
-          Product
-        </InputLabel>
+        <InputLabel shrink>Product</InputLabel>
         <Select
           multiple
           name="product"
@@ -70,14 +68,17 @@ const MultiSelect = () => {
             />
           }
         >
-          {(products &&
+          {products?.length ? (
             products.map((product) => {
               return (
                 <MenuItem key={product.id} value={product.title}>
                   {product.title}
                 </MenuItem>
               );
-            })) ?? <MenuItem value>No data.</MenuItem>}
+            })
+          ) : (
+            <MenuItem value>No data.</MenuItem>
+          )}
         </Select>
       </FormControl>
       <Button type="submit" variant="contained">
