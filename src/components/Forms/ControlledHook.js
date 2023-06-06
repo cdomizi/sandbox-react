@@ -87,7 +87,7 @@ const ControlledHook = () => {
             {...field}
             {...register("age", {
               min: {
-                value: undefined,
+                value: 0,
                 message: <>Provide a valid age.</>,
               },
             })}

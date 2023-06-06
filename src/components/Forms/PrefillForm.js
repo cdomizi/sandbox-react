@@ -6,7 +6,7 @@ import { Button, Stack, TextField, Typography } from "@mui/material";
 
 const PrefillForm = () => {
   const defaultValues = useMemo(
-    () => ({ title: "test1", brand: "hi", price: "44" }),
+    () => ({ title: "", brand: "", price: "" }),
     []
   );
   const [randomData, setRandomData] = useState(defaultValues);
@@ -29,7 +29,6 @@ const PrefillForm = () => {
   }, [randomData]);
 
   const {
-    register,
     control,
     handleSubmit,
     formState: { errors },
@@ -54,19 +53,19 @@ const PrefillForm = () => {
   return (
     <>
       <Stack component="form" onSubmit={handleSubmit(onSubmit)} spacing={3}>
-        <Typography variant="h3">Pre-fill-Form</Typography>
+        <Typography variant="h3">Populate Fields</Typography>
         <Controller
           control={control}
           name="title"
+          rules={{ required: "This field is required" }}
           render={({ field }) => (
             <TextField
               {...field}
-              {...register("title", { required: "This field is required" })}
-              error={!!errors.title}
-              helperText={errors.title && errors.message}
               id="title"
               label="Title"
-              required
+              error={!!errors.title}
+              helperText={errors.title && errors.title.message}
+              InputLabelProps={{ required: true }}
             />
           )}
         />
@@ -76,31 +75,23 @@ const PrefillForm = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              {...register("brand")}
-              error={!!errors.title}
-              helperText={errors.title && errors.message}
               id="brand"
               label="Brand"
+              error={!!errors.brand}
+              helperText={errors.brand && "Enter a valid brand."}
             />
           )}
         />
         <Controller
           control={control}
           name="price"
+          rules={{
+            valueAsNumber: true,
+          }}
           render={({ field }) => (
-            <TextField
-              {...field}
-              {...register("price", {
-                number: (v) => Number.isInteger(v),
-                positive: (v) => parseInt(v) > 0,
-                message: <>Enter a valid price.</>,
-              })}
-              error={!!errors.title}
-              helperText={errors.title && errors.message}
-              id="price"
-              label="Price"
-              type="number"
-            />
+            <>
+              <TextField {...field} id="price" label="Price" type="number" />
+            </>
           )}
         />
         <Button
