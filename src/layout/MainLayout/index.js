@@ -5,6 +5,7 @@ import { drawerContext } from "../../context/Contexts";
 import CustomSelect from "../../components/Select/CustomSelect";
 import MultiSelect from "../../components/Select/MultiSelect";
 import SelectHook from "../../components/Select/SelectHook";
+import PrefillForm from "../../components/Forms/PrefillForm";
 import ControlledForm from "../../components/Forms/ControlledForm";
 import UncontrolledForm from "../../components/Forms/UncontrolledForm";
 import ControlledHook from "../../components/Forms/ControlledHook";
@@ -37,6 +38,9 @@ function MainLayout() {
         </ContentCard>
         <ContentCard minWidth={250}>
           <SelectHook />
+        </ContentCard>
+        <ContentCard minWidth={250}>
+          <PrefillForm />
         </ContentCard>
       </Stack>
       <Divider sx={{ my: 6 }} />
