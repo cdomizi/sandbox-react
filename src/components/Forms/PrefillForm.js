@@ -31,18 +31,25 @@ const PrefillForm = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { isValid, errors },
     reset,
     watch,
   } = useForm({ defaultValues });
 
   const onSubmit = useCallback(
     (formData) => {
-      console.log(formData);
-      setRandomData(defaultValues);
-      reset(defaultValues);
+      if (isValid) {
+        // Format price value
+        formData.price =
+          formData.price === ""
+            ? ""
+            : (Math.round(parseFloat(formData.price) * 100) / 100).toFixed(2);
+        console.log(formData);
+        setRandomData(defaultValues);
+        reset(defaultValues);
+      }
     },
-    [defaultValues, reset]
+    [defaultValues, isValid, reset]
   );
 
   // Fill form fields with random data on button click
@@ -86,11 +93,22 @@ const PrefillForm = () => {
           control={control}
           name="price"
           rules={{
-            valueAsNumber: true,
+            validate: {
+              positiveFloat: (v) =>
+                (!!Number(v) && parseFloat(v) > 0) ||
+                v === "" ||
+                "Enter a valid price",
+            },
           }}
           render={({ field }) => (
             <>
-              <TextField {...field} id="price" label="Price" type="number" />
+              <TextField
+                {...field}
+                id="price"
+                label="Price"
+                error={!!errors.price}
+                helperText={errors.price && <>{errors.price?.message}</>}
+              />
             </>
           )}
         />
