@@ -1,5 +1,6 @@
 import { useEffect, useCallback, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import validationRules from "./formValidation";
 
 // MUI components
 import { Button, Stack, TextField, Typography } from "@mui/material";
@@ -10,6 +11,12 @@ const PrefillForm = () => {
     []
   );
   const [randomData, setRandomData] = useState(defaultValues);
+
+  const rules = {
+    title: { fieldFormat: { required: true } },
+    brand: {},
+    price: { fieldFormat: { positiveFloat: 2 } },
+  };
 
   // Get random data from external API
   const getRandomData = useCallback(async () => {
@@ -28,28 +35,19 @@ const PrefillForm = () => {
     }
   }, [randomData]);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { isValid, errors },
-    reset,
-    watch,
-  } = useForm({ defaultValues });
+  const { control, handleSubmit, formState, reset, watch } = useForm({
+    defaultValues,
+  });
 
   const onSubmit = useCallback(
     (formData) => {
-      if (isValid) {
-        // Format price value
-        formData.price =
-          formData.price === ""
-            ? ""
-            : (Math.round(parseFloat(formData.price) * 100) / 100).toFixed(2);
+      if (formState.isValid) {
         console.log(formData);
         setRandomData(defaultValues);
         reset(defaultValues);
       }
     },
-    [defaultValues, isValid, reset]
+    [defaultValues, formState.isValid, reset]
   );
 
   // Fill form fields with random data on button click
@@ -64,14 +62,16 @@ const PrefillForm = () => {
         <Controller
           control={control}
           name="title"
-          rules={{ required: "This field is required" }}
+          rules={validationRules(rules.title)}
           render={({ field }) => (
             <TextField
               {...field}
               id="title"
               label="Title"
-              error={!!errors.title}
-              helperText={errors.title && errors.title.message}
+              error={!!formState.errors.title}
+              helperText={
+                formState.errors.title && formState.errors.title.message
+              }
               InputLabelProps={{ required: true }}
             />
           )}
@@ -84,30 +84,27 @@ const PrefillForm = () => {
               {...field}
               id="brand"
               label="Brand"
-              error={!!errors.brand}
-              helperText={errors.brand && "Enter a valid brand."}
+              error={!!formState.errors.brand}
+              helperText={formState.errors.brand && "Enter a valid brand."}
             />
           )}
         />
         <Controller
           control={control}
           name="price"
-          rules={{
-            validate: {
-              positiveFloat: (v) =>
-                (!!Number(v) && parseFloat(v) > 0) ||
-                v === "" ||
-                "Enter a valid price",
-            },
-          }}
+          rules={validationRules(rules.price)}
           render={({ field }) => (
             <>
               <TextField
                 {...field}
                 id="price"
                 label="Price"
-                error={!!errors.price}
-                helperText={errors.price && <>{errors.price?.message}</>}
+                error={!!formState.errors.price}
+                helperText={
+                  formState.errors.price && (
+                    <>{formState.errors.price?.message}</>
+                  )
+                }
               />
             </>
           )}
