@@ -69,7 +69,7 @@ const ControlledHook = () => {
             {...register("name", {
               minLength: {
                 value: 3,
-                message: <>User should be 3 characters long.</>,
+                message: <>Name should be 3 characters long.</>,
               },
             })}
             id="name"
