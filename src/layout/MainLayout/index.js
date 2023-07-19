@@ -7,6 +7,7 @@ import MultiSelect from "../../components/Select/MultiSelect";
 import SelectHook from "../../components/Select/SelectHook";
 import CartForm from "../../components/Forms/CartForm";
 import CheckboxForm from "../../components/Forms/CheckboxForm";
+import ArrayForm from "../../components/Forms/ArrayForm";
 import Counter from "../../components/Counter/Counter";
 import Switch from "../../components/Switch/Switch";
 import PrefillForm from "../../components/Forms/PrefillForm";
@@ -37,6 +38,9 @@ function MainLayout() {
         </ContentCard>
         <ContentCard minWidth={250}>
           <CheckboxForm />
+        </ContentCard>
+        <ContentCard minWidth={450}>
+          <ArrayForm />
         </ContentCard>
         <ContentCard minWidth={250}>
           <Switch />
