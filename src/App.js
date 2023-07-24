@@ -1,17 +1,30 @@
 import Form from "./components/Form";
-import ProductFetch from "./components/ProductFetch"
+import ProductFetch from "./components/ProductFetch";
 
-import { Divider, Stack } from "@mui/material";
+import { Divider, Stack, useMediaQuery, useTheme } from "@mui/material";
 
 const App = () => {
+  const theme = useTheme();
 
   return (
-    <Stack spacing={4} m={4} className="App">
-      <Form/>
-      <Divider/>
-      <ProductFetch/>
+    <Stack
+      direction={{ xs: "column", md: "row" }}
+      spacing={4}
+      m={4}
+      className="App"
+    >
+      <Form />
+      <Divider
+        orientation={
+          useMediaQuery(theme.breakpoints.down("md"))
+            ? "horizontal"
+            : "vertical"
+        }
+        flexItem
+      />
+      <ProductFetch />
     </Stack>
   );
-}
+};
 
 export default App;

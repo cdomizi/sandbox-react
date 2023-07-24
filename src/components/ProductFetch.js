@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import Log from "./Log";
 
-import { Button } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 
 const ProductFetch = () => {
   const [product, setProduct] = useState({});
@@ -13,25 +13,27 @@ const ProductFetch = () => {
 
   // send fetch request on button click
   const handleFetchData = () => {
-    const id = Math.ceil(Math.random() * 100);
-    setUrl(`https://dummyjson.com/products/${id}`);
+    const randomId = Math.ceil(Math.random() * 100);
+    setUrl(`https://dummyjson.com/products/${randomId}`);
   };
 
   // update product upon fetching data
   useEffect(() => setProduct(data), [data]);
 
   return (
-    <div className="App">
-      <Button variant="contained" onClick={handleFetchData}>Fetch Product Data</Button>
+    <Stack className="App" width={"24rem"} spacing={4}>
+      <Button variant="contained" onClick={handleFetchData}>
+        Fetch Product Data
+      </Button>
       {error ? (
-        <p>{`Error: ${error.message}`}</p>
+        <Typography>{`Error: ${error.message}`}</Typography>
       ) : loading ? (
-        <p>loading...</p>
+        <Typography>loading...</Typography>
       ) : (
         <Log value={product} />
       )}
-    </div>
+    </Stack>
   );
-}
+};
 
 export default ProductFetch;
