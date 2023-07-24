@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -17,6 +18,32 @@ import {
 
 // MUI icons
 import { Delete as DeleteIcon, Edit as EditIcon } from "@mui/icons-material";
+
+const SubmitButton = ({ name, loading }) => (
+  <Button
+    type="submit"
+    id={`${name}Button`}
+    variant="outlined"
+    size="large"
+    fullWidth
+    endIcon={
+      loading ? (
+        <CircularProgress color="inherit" size={20} />
+      ) : name === "edit" ? (
+        <EditIcon />
+      ) : (
+        <DeleteIcon />
+      )
+    }
+    disabled={loading}
+    color={name === "edit" ? "primary" : "error"}
+    sx={{
+      "&, & .MuiButtonBase-root": { alignItems: "normal" },
+    }}
+  >
+    {name}
+  </Button>
+);
 
 const Form = () => {
   // Set snackbar state
@@ -173,32 +200,6 @@ const Form = () => {
     [control, data?.brand, data?.id, data?.price, data?.title]
   );
 
-  const SubmitButton = ({ name }) => (
-    <Button
-      type="submit"
-      id={`${name}Button`}
-      variant="outlined"
-      size="large"
-      fullWidth
-      endIcon={
-        loading ? (
-          <CircularProgress color="inherit" size={20} />
-        ) : name === "edit" ? (
-          <EditIcon />
-        ) : (
-          <DeleteIcon />
-        )
-      }
-      disabled={loading}
-      color={name === "edit" ? "primary" : "error"}
-      sx={{
-        "&, & .MuiButtonBase-root": { alignItems: "normal" },
-      }}
-    >
-      {name}
-    </Button>
-  );
-
   return (
     <Stack
       component="form"
@@ -208,8 +209,8 @@ const Form = () => {
     >
       {loading ? loadingForm : formFields}
       <Stack direction="row" spacing={2}>
-        <SubmitButton name="edit" />
-        <SubmitButton name="delete" />
+        <SubmitButton name="edit" loading={loading} />
+        <SubmitButton name="delete" loading={loading} />
       </Stack>
       <Log value={watch()} />
       <CustomSnackbar
@@ -223,3 +224,7 @@ const Form = () => {
 };
 
 export default Form;
+
+SubmitButton.propTypes = {
+  name: PropTypes.oneOf(["edit", "delete"]),
+};
