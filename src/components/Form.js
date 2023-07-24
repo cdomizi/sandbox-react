@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 // Project import
+import { SnackbarContext, SNACKBAR_ACTIONS } from "../contexts/SnackbarContext";
 import useFetch from "../hooks/useFetch";
 import Log from "./Log";
-import CustomSnackbar from "./CustomSnackbar";
 
 // MUI components
 import {
@@ -46,8 +46,8 @@ const SubmitButton = ({ name, loading }) => (
 );
 
 const Form = () => {
-  // Set snackbar state
-  const [open, setOpen] = useState(false);
+  // Dispatch function for snackbar component
+  const dispatch = useContext(SnackbarContext);
 
   // Get random product data
   const randomId = useMemo(() => Math.ceil(Math.random() * 100), []);
@@ -81,7 +81,10 @@ const Form = () => {
       });
       return response.json();
     } catch (err) {
-      return err?.message || `Unexpected error while editing product ${id}`;
+      console.error(
+        err?.message || `Unexpected error while editing product ${id}`
+      );
+      return null;
     }
   }, []);
 
@@ -95,30 +98,48 @@ const Form = () => {
       );
       return response.json();
     } catch (err) {
-      return (
+      console.error(
         err?.message || `Unexpected error while editing product ${formData.id}`
       );
+      return null;
     }
   }, []);
 
   const onSubmit = useCallback(
     async (formData, event) => {
-      const json = await (event.nativeEvent.submitter.id === "editButton"
+      // Check if edit or delete based on button `id` property
+      const checkEdit = event.nativeEvent.submitter.id === "editButton";
+
+      // Edit or delete the product accordingly
+      const json = await (checkEdit
         ? editProduct(formData)
         : deleteProduct(formData));
-      console.log(json);
+
+      // Dispatch the appropriate action
+      if (json) {
+        checkEdit
+          ? dispatch({ type: SNACKBAR_ACTIONS.EDIT, payload: json?.title })
+          : dispatch({
+              type: SNACKBAR_ACTIONS.EDIT_ERROR,
+              payload: json?.title,
+            });
+        // Log response payload on success
+        console.log(json);
+      } else {
+        checkEdit
+          ? dispatch({ type: SNACKBAR_ACTIONS.DELETE })
+          : dispatch({ type: SNACKBAR_ACTIONS.DELETE_ERROR });
+      }
     },
-    [deleteProduct, editProduct]
+    [deleteProduct, dispatch, editProduct]
   );
 
   // Reset form fields on submit
   useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset();
-      setOpen(true);
-    }
-  }, [isSubmitSuccessful, reset]);
+    if (isSubmitSuccessful) reset();
+  }, [dispatch, isSubmitSuccessful, reset]);
 
+  // Display disabled form fields on load
   const loadingForm = useMemo(
     () =>
       ["ID", "Title", "Brand", "Price"].map((field) => (
@@ -140,6 +161,7 @@ const Form = () => {
     []
   );
 
+  // Display active form fields and populate them
   const formFields = useMemo(
     () => (
       <>
@@ -213,12 +235,6 @@ const Form = () => {
         <SubmitButton name="delete" loading={loading} />
       </Stack>
       <Log value={watch()} />
-      <CustomSnackbar
-        open={open}
-        message="Note archived"
-        onClose={() => setOpen(false)}
-        success={true}
-      />
     </Stack>
   );
 };

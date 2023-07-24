@@ -1,3 +1,8 @@
+import PropTypes from "prop-types";
+import { useContext } from "react";
+import { SnackbarContext, SNACKBAR_ACTIONS } from "../contexts/SnackbarContext";
+
+// MUI components & icons
 import { Alert, IconButton, Snackbar } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 
@@ -5,15 +10,13 @@ const CustomSnackbar = ({
   open,
   vertical = "top",
   horizontal = "center",
-  onClose,
   success,
   message,
 }) => {
+  const dispatch = useContext(SnackbarContext);
+
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    return onClose();
+    dispatch({ type: SNACKBAR_ACTIONS.CLOSE, payload: reason });
   };
 
   return (
@@ -47,3 +50,12 @@ const CustomSnackbar = ({
 };
 
 export default CustomSnackbar;
+
+CustomSnackbar.propTypes = {
+  open: PropTypes.bool,
+  vertical: PropTypes.oneOf(["top", "bottom"]),
+  horizontal: PropTypes.oneOf(["left", "center", "right"]),
+  success: PropTypes.bool,
+  message: PropTypes.string,
+  onClose: PropTypes.func,
+};

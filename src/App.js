@@ -1,3 +1,4 @@
+import { SnackbarProvider } from "./contexts/SnackbarContext";
 import Form from "./components/Form";
 import ProductFetch from "./components/ProductFetch";
 
@@ -13,7 +14,9 @@ const App = () => {
       m={4}
       className="App"
     >
-      <Form />
+      <SnackbarProvider>
+        <Form />
+      </SnackbarProvider>
       <Divider
         orientation={
           useMediaQuery(theme.breakpoints.down("md"))
