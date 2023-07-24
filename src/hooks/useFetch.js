@@ -1,4 +1,5 @@
-import { useEffect, useReducer } from "react";
+import PropTypes from "prop-types";
+import { useEffect, useReducer, useRef } from "react";
 
 const initialState = { loading: false, error: undefined, data: undefined };
 
@@ -33,7 +34,8 @@ const fetchReducer = (state, action) => {
   }
 };
 
-const useFetch = (url, options) => {
+const useFetch = (url, options = null, reload = null) => {
+  const cache = useRef({});
   const [state, dispatch] = useReducer(fetchReducer, initialState);
 
   useEffect(() => {
@@ -45,6 +47,12 @@ const useFetch = (url, options) => {
     // Fetch data
     const fetchData = async () => {
       dispatch({ type: ACTIONS.LOADING });
+
+      // If a cache exists for this url, return it
+      if (cache.current[url] && reload === {}) {
+        dispatch({ type: "fetched", payload: cache.current[url] });
+        return;
+      }
 
       try {
         const response = await fetch(url, {
@@ -58,18 +66,21 @@ const useFetch = (url, options) => {
         }
 
         const data = await response.json();
+        cache.current[url] = data;
         dispatch({
           type: ACTIONS.SUCCESS,
           payload: data,
         });
       } catch (error) {
         if (!abortController.signal.aborted) {
-          console.error(`Error while fetching data: ${error.message}`);
+          console.error(
+            `Error while fetching data: ${error?.message || "Unexpected error"}`
+          );
+          dispatch({
+            type: ACTIONS.ERROR,
+            payload: error,
+          });
         }
-        dispatch({
-          type: ACTIONS.ERROR,
-          payload: error,
-        });
       }
     };
     fetchData();
@@ -77,8 +88,14 @@ const useFetch = (url, options) => {
     return function cleanup() {
       abortController.abort();
     };
-  }, [url, options]);
+  }, [url, options, reload]);
   return state;
+};
+
+useFetch.propTypes = {
+  url: PropTypes.string,
+  options: PropTypes.object,
+  reload: PropTypes.object,
 };
 
 export default useFetch;

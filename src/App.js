@@ -1,34 +1,16 @@
-import { useEffect, useState } from "react";
-import useFetch from "./hooks/useFetch";
-import Log from "./components/Log";
+import Form from "./components/Form";
+import ProductFetch from "./components/ProductFetch"
 
-function App() {
-  const [product, setProduct] = useState({});
-  const [url, setUrl] = useState(null);
+import { Divider, Stack } from "@mui/material";
 
-  // fetch product data
-  const { loading, error, data } = useFetch(url);
-
-  // send fetch request on button click
-  const handleFetchData = () => {
-    const id = Math.ceil(Math.random() * 100);
-    setUrl(`https://dummyjson.com/products/${id}`);
-  };
-
-  // update product upon fetching data
-  useEffect(() => setProduct(data), [data]);
+const App = () => {
 
   return (
-    <div className="App">
-      <button onClick={handleFetchData}>Fetch Product Data</button>
-      {error ? (
-        <p>{`Error: ${error.message}`}</p>
-      ) : loading ? (
-        <p>loading...</p>
-      ) : (
-        <Log value={product} />
-      )}
-    </div>
+    <Stack spacing={4} m={4} className="App">
+      <Form/>
+      <Divider/>
+      <ProductFetch/>
+    </Stack>
   );
 }
 
