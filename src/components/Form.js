@@ -1,7 +1,10 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+
+// Project import
 import useFetch from "../hooks/useFetch";
 import Log from "./Log";
+import CustomSnackbar from "./CustomSnackbar";
 
 // MUI components
 import {
@@ -16,6 +19,9 @@ import {
 import { Delete as DeleteIcon, Edit as EditIcon } from "@mui/icons-material";
 
 const Form = () => {
+  // Set snackbar state
+  const [open, setOpen] = useState(false);
+
   // Get random product data
   const randomId = useMemo(() => Math.ceil(Math.random() * 100), []);
   const { loading, data } = useFetch(
@@ -39,20 +45,16 @@ const Form = () => {
   });
 
   const editProduct = useCallback(async (formData) => {
+    const { id, title, brand, price } = formData;
     try {
-      const response = await fetch(
-        `https://dummyjson.com/products/${formData.id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(`https://dummyjson.com/products/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, brand, price }),
+      });
       return response.json();
     } catch (err) {
-      return (
-        err?.message || `Unexpected error while editing product ${formData.id}`
-      );
+      return err?.message || `Unexpected error while editing product ${id}`;
     }
   }, []);
 
@@ -84,7 +86,10 @@ const Form = () => {
 
   // Reset form fields on submit
   useEffect(() => {
-    isSubmitSuccessful && reset();
+    if (isSubmitSuccessful) {
+      reset();
+      setOpen(true);
+    }
   }, [isSubmitSuccessful, reset]);
 
   const loadingForm = useMemo(
@@ -207,6 +212,12 @@ const Form = () => {
         <SubmitButton name="delete" />
       </Stack>
       <Log value={watch()} />
+      <CustomSnackbar
+        open={open}
+        message="Note archived"
+        onClose={() => setOpen(false)}
+        success={true}
+      />
     </Stack>
   );
 };
