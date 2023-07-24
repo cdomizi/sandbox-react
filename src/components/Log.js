@@ -3,7 +3,7 @@ const Log = ({ value = "No data", replace = null, space = 2 }) => {
   return (
     <>
       <pre>
-        <code>{data}</code>
+        <code style={{ whiteSpace: "pre-wrap" }}>{data}</code>
       </pre>
     </>
   );
