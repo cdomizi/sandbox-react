@@ -1,4 +1,5 @@
 import { SnackbarProvider } from "./contexts/SnackbarContext";
+import { ProductProvider } from "./contexts/ProductContext";
 import Form from "./components/Form";
 import ProductFetch from "./components/ProductFetch";
 
@@ -15,7 +16,9 @@ const App = () => {
       className="App"
     >
       <SnackbarProvider>
-        <Form />
+        <ProductProvider>
+          <Form />
+        </ProductProvider>
       </SnackbarProvider>
       <Divider
         orientation={

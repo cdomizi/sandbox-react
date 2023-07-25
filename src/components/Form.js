@@ -3,8 +3,11 @@ import { useCallback, useContext, useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 // Project import
-import { SnackbarContext, SNACKBAR_ACTIONS } from "../contexts/SnackbarContext";
-import useFetch from "../hooks/useFetch";
+import {
+  ProductContext,
+  ProductDispatchContext,
+  PRODUCT_ACTIONS,
+} from "../contexts/ProductContext";
 import Log from "./Log";
 
 // MUI components
@@ -46,14 +49,13 @@ const SubmitButton = ({ name, loading }) => (
 );
 
 const Form = () => {
-  // Dispatch function for snackbar component
-  const dispatch = useContext(SnackbarContext);
-
   // Get random product data
-  const randomId = useMemo(() => Math.ceil(Math.random() * 100), []);
-  const { loading, data } = useFetch(
-    `https://dummyjson.com/products/${randomId}`
-  );
+  const { loading, data } = useContext(ProductContext);
+
+  useEffect(() => console.log({ loading, data }), [data, loading]);
+
+  // Product dispatch function
+  const dispatch = useContext(ProductDispatchContext);
 
   const {
     control,
@@ -71,73 +73,29 @@ const Form = () => {
     },
   });
 
-  const editProduct = useCallback(async (formData) => {
-    const { id, title, brand, price } = formData;
-    try {
-      const response = await fetch(`https://dummyjson.com/products/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, brand, price }),
-      });
-      return response.json();
-    } catch (err) {
-      console.error(
-        err?.message || `Unexpected error while editing product ${id}`
-      );
-      return null;
-    }
-  }, []);
-
-  const deleteProduct = useCallback(async (formData) => {
-    try {
-      const response = await fetch(
-        `https://dummyjson.com/products/${formData.id}`,
-        {
-          method: "DELETE",
-        }
-      );
-      return response.json();
-    } catch (err) {
-      console.error(
-        err?.message || `Unexpected error while editing product ${formData.id}`
-      );
-      return null;
-    }
-  }, []);
-
   const onSubmit = useCallback(
     async (formData, event) => {
       // Check if edit or delete based on button `id` property
       const checkEdit = event.nativeEvent.submitter.id === "editButton";
 
       // Edit or delete the product accordingly
-      const json = await (checkEdit
-        ? editProduct(formData)
-        : deleteProduct(formData));
-
-      // Dispatch the appropriate action
-      if (json) {
-        checkEdit
-          ? dispatch({ type: SNACKBAR_ACTIONS.EDIT, payload: json?.title })
-          : dispatch({
-              type: SNACKBAR_ACTIONS.EDIT_ERROR,
-              payload: json?.title,
-            });
-        // Log response payload on success
-        console.log(json);
-      } else {
-        checkEdit
-          ? dispatch({ type: SNACKBAR_ACTIONS.DELETE })
-          : dispatch({ type: SNACKBAR_ACTIONS.DELETE_ERROR });
-      }
+      checkEdit
+        ? dispatch({
+            type: PRODUCT_ACTIONS.EDIT,
+            payload: formData,
+          })
+        : dispatch({
+            type: PRODUCT_ACTIONS.DELETE,
+            payload: formData,
+          });
     },
-    [deleteProduct, dispatch, editProduct]
+    [dispatch]
   );
 
   // Reset form fields on submit
   useEffect(() => {
     if (isSubmitSuccessful) reset();
-  }, [dispatch, isSubmitSuccessful, reset]);
+  }, [isSubmitSuccessful, reset]);
 
   // Display disabled form fields on load
   const loadingForm = useMemo(
