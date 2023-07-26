@@ -30,8 +30,8 @@ const CustomSnackbar = ({
       onClose={handleClose}
     >
       <Alert
-        severity={success ? "success" : "error"}
         variant="filled"
+        severity={success ? "success" : "error"}
         action={
           <IconButton
             size="small"
@@ -57,5 +57,4 @@ CustomSnackbar.propTypes = {
   horizontal: PropTypes.oneOf(["left", "center", "right"]),
   success: PropTypes.bool,
   message: PropTypes.string,
-  onClose: PropTypes.func,
 };
