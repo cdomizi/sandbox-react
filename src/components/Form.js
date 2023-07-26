@@ -50,9 +50,7 @@ const SubmitButton = ({ name, loading }) => (
 
 const Form = () => {
   // Get random product data
-  const { loading, data } = useContext(ProductContext);
-
-  useEffect(() => console.log({ loading, data }), [data, loading]);
+  const { data, loading } = useContext(ProductContext);
 
   // Product dispatch function
   const dispatch = useContext(ProductDispatchContext);
