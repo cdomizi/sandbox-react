@@ -2,6 +2,7 @@ import { SnackbarProvider } from "./contexts/SnackbarContext";
 import { ProductProvider } from "./contexts/ProductContext";
 import Form from "./components/Form";
 import ProductFetch from "./components/ProductFetch";
+import YupForm from "./components/YupForm";
 
 import { Divider, Stack, useMediaQuery, useTheme } from "@mui/material";
 
@@ -29,6 +30,15 @@ const App = () => {
         flexItem
       />
       <ProductFetch />
+      <Divider
+        orientation={
+          useMediaQuery(theme.breakpoints.down("md"))
+            ? "horizontal"
+            : "vertical"
+        }
+        flexItem
+      />
+      <YupForm/>
     </Stack>
   );
 };

@@ -49,6 +49,7 @@ const useFetch = (url, options = null, reload = null) => {
       dispatch({ type: ACTIONS.LOADING });
 
       // If a cache exists for this url, return it
+      // WARNING: `reload === {}` is ALWAYS false, this block never runs
       if (cache.current[url] && reload === {}) {
         dispatch({ type: "fetched", payload: cache.current[url] });
         return;

@@ -21,7 +21,7 @@ const ProductFetch = () => {
   useEffect(() => setProduct(data), [data]);
 
   return (
-    <Stack className="App" width={"24rem"} spacing={4}>
+    <Stack className="App" width={"22rem"} spacing={4}>
       <Button variant="contained" onClick={handleFetchData}>
         Fetch Product Data
       </Button>
