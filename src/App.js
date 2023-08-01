@@ -38,7 +38,7 @@ const App = () => {
         }
         flexItem
       />
-      <YupForm/>
+      <YupForm />
     </Stack>
   );
 };
