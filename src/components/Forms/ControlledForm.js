@@ -1,17 +1,28 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button, Stack, TextField, Typography } from "@mui/material";
 
 const ControlledForm = () => {
   // form state
   const initialFormState = useMemo(
     () => ({
-      title: "",
-      brand: "",
-      price: "",
+      title: null,
+      brand: null,
+      price: null,
     }),
     []
   );
   const [formData, setFormData] = useState(initialFormState);
+
+  // form error state
+  const initialFormErrorState = useMemo(
+    () => ({
+      title: false,
+      brand: false,
+      price: false,
+    }),
+    []
+  );
+  const [formError, setFormError] = useState(initialFormErrorState);
 
   // update form state on type
   const handleChange = (event) => {
@@ -22,11 +33,23 @@ const ControlledForm = () => {
   const handleSubmit = (event) => {
     // prevent redirecting, reloading
     event.preventDefault();
-    // reset form fields on submit
-    setFormData(initialFormState);
+
+    for (const [key, value] of Object.entries(formData)) {
+      !value?.length && setFormError({ ...formError, [key]: true });
+      return;
+    }
 
     console.log(formData);
+
+    // reset form fields on submit
+    setFormData(initialFormState);
   };
+
+  useEffect(() => {
+    for (const [key, value] of Object.entries(formData)) {
+      value?.length && setFormError({ ...formError, [key]: false });
+    }
+  }, [formData, formError]);
 
   return (
     <>
@@ -36,24 +59,30 @@ const ControlledForm = () => {
           id="title"
           name="title"
           label="Title"
-          value={formData.title}
+          value={formData.title || ""}
           onChange={handleChange}
-          required
+          error={!!formError?.title}
+          helperText={!!formError?.title && "Please enter a title"}
+          InputLabelProps={{ required: true }}
         />
         <TextField
           id="brand"
           name="brand"
           label="Brand"
-          value={formData.brand}
+          value={formData.brand || ""}
           onChange={handleChange}
+          error={!!formError?.brand}
+          helperText={!!formError?.brand && "Please enter a valid brand"}
         />
         <TextField
           id="price"
           name="price"
           label="Price"
           type="number"
-          value={formData.price}
+          value={formData.price || ""}
           onChange={handleChange}
+          error={!!formError?.price}
+          helperText={!!formError?.price && "Please enter a valid price"}
         />
         <Button type="submit" variant="contained">
           Submit
