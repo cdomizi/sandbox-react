@@ -4,6 +4,7 @@ import ProductFetch from "./components/ProductFetch";
 import CustomAppBar from "./components/CustomAppBar";
 import Form from "./components/Form";
 import YupForm from "./components/YupForm";
+import TestForm from "./components/TestForm";
 
 import {
   Box,
@@ -50,6 +51,15 @@ const App = () => {
           flexItem
         />
         <YupForm />
+        <Divider
+          orientation={
+            useMediaQuery(theme.breakpoints.down("md"))
+              ? "horizontal"
+              : "vertical"
+          }
+          flexItem
+        />
+        <TestForm/>
       </Stack>
     </Box>
   );
