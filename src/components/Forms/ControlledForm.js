@@ -35,8 +35,9 @@ const ControlledForm = () => {
     event.preventDefault();
 
     for (const [key, value] of Object.entries(formData)) {
-      !value?.length && setFormError({ ...formError, [key]: true });
-      return;
+      key === "title" &&
+        !value?.length &&
+        setFormError({ ...formError, [key]: true });
     }
 
     console.log(formData);
