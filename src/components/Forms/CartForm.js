@@ -29,14 +29,22 @@ const CartForm = () => {
   });
 
   const onSubmit = (formData) => {
-    console.log(formData);
+    // Process form data for submit
+    const submitData = {
+      cart: formData.cart?.map((product) => ({
+        id: parseInt(product.product.id, 10),
+        quantity: parseInt(product.quantity, 10),
+      })),
+    };
+
+    console.log(submitData);
   };
 
   // Reset the form on submit
   useEffect(() => {
     if (isSubmitSuccessful) {
       reset();
-      fields.forEach((field) => remove());
+      remove();
     }
   }, [isSubmitSuccessful, fields, remove, reset]);
 
@@ -54,7 +62,7 @@ const CartForm = () => {
     <Stack onSubmit={handleSubmit(onSubmit)} component="form" spacing={3}>
       <Typography variant="h3">Cart</Typography>
       {fields.map((item, index) => (
-        <Stack key={index} direction="row" spacing={1}>
+        <Stack key={item.id} direction="row" spacing={1}>
           <Controller
             control={control}
             name={`cart.${index}.product`}

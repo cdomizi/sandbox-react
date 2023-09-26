@@ -1,6 +1,8 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import useFetch from "../../hooks/useFetch";
+
+// MUI components & icons
 import {
   Autocomplete,
   Box,
@@ -15,7 +17,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-
 import { Delete as DeleteIcon } from "@mui/icons-material";
 
 export default function App() {
@@ -26,7 +27,14 @@ export default function App() {
     data: products,
   } = useFetch("https://dummyjson.com/products");
 
-  const { register, control, handleSubmit, formState, reset, watch } = useForm({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors, isLoading, isSubmitSuccessful, isSubmitting },
+    reset,
+    watch,
+  } = useForm({
     defaultValues: { products: [{ product: "", quantity: 1 }], invoice: false },
   });
 
@@ -34,25 +42,30 @@ export default function App() {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "products",
+    rules: {
+      required: "Please, add at least one product",
+    },
   });
 
-  const onSubmit = useCallback(
-    (formData) => {
-      // Process form data for submit
-      const submitData = {
-        products: formData.products?.map((product) => ({
-          id: parseInt(product.product.id, 10),
-          quantity: parseInt(product.quantity, 10),
-        })),
-      };
+  const onSubmit = useCallback((formData) => {
+    // Process form data for submit
+    const submitData = {
+      products: formData.products?.map((product) => ({
+        product,
+        quantity: parseInt(product.quantity, 10),
+      })),
+    };
 
-      console.log(submitData);
+    console.log(submitData);
+  }, []);
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
       // Reset form and remove all product fields on submit
       reset();
-      remove();
-    },
-    [remove, reset]
-  );
+      fields.forEach((field, index) => index !== 0 && remove(index));
+    }
+  }, [fields, isSubmitSuccessful, remove, reset]);
 
   return (
     <Box className="App" mx={3} sx={{ width: "24rem" }}>
@@ -87,27 +100,18 @@ export default function App() {
                         {...params}
                         id={`products.${index}.product-input`}
                         label={`Product #${index + 1}`}
-                        error={
-                          !!(formState.errors["products"] || productsError)
-                        }
+                        error={!!(errors["products"] || productsError)}
                         helperText={
-                          (formState.errors["products"] &&
-                            formState.errors["products"]?.message) ||
+                          (errors["products"] && errors["products"]?.message) ||
                           productsError?.message
                         }
                         InputLabelProps={{ shrink: true }}
-                        disabled={
-                          formState.isLoading ||
-                          formState.isSubmitting ||
-                          productsLoading
-                        }
+                        disabled={isLoading || isSubmitting || productsLoading}
                         InputProps={{
                           ...params.InputProps,
                           endAdornment: (
                             <>
-                              {formState.isLoading ||
-                              formState.isSubmitting ||
-                              productsLoading ? (
+                              {isLoading || isSubmitting || productsLoading ? (
                                 <InputAdornment position="end">
                                   <CircularProgress color="inherit" size={20} />
                                 </InputAdornment>
@@ -134,6 +138,7 @@ export default function App() {
                       id={`products.${index}.quantity`}
                       label={`Qty. #${index + 1}`}
                       type="number"
+                      InputProps={{ inputProps: { min: 1 } }}
                       InputLabelProps={{ shrink: true }}
                       sx={{ width: "4rem" }}
                     />
@@ -145,6 +150,9 @@ export default function App() {
               </IconButton>
             </Stack>
           ))}
+          <Typography color="error.main">
+            {errors.products?.root?.message}
+          </Typography>
           <Button
             type="button"
             variant="outlined"
