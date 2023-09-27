@@ -66,16 +66,16 @@ function MainLayout() {
       </Stack>
       <Divider sx={{ my: 6 }} />
       <Stack direction="row" spacing={5}>
-        <ContentCard>
+        <ContentCard minWidth={250}>
           <ControlledForm />
         </ContentCard>
-        <ContentCard>
+        <ContentCard minWidth={250}>
           <UncontrolledForm />
         </ContentCard>
-        <ContentCard>
+        <ContentCard minWidth={250}>
           <ControlledHook />
         </ContentCard>
-        <ContentCard>
+        <ContentCard minWidth={250}>
           <UncontrolledHook />
         </ContentCard>
       </Stack>
